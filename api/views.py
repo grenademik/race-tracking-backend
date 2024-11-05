@@ -23,7 +23,6 @@ def apiOverview(request):
     }
     return Response(api_urls)
 
-
 class RaceDataList(generics.ListAPIView):
     queryset = RaceData.objects.all()
     serializer_class = RaceDataSerializer
