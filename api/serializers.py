@@ -12,12 +12,14 @@ class RaceDataSerializer(serializers.ModelSerializer):
         fields = ['BIB', 'name', 'country', 'gender', 'category', 'age']
 
 class RaceSerializer(serializers.ModelSerializer):
-    race_data = RaceDataSerializer(many=True)  # Nested list of RaceData instances
-    race_timings = RaceTimingSerializer(many=True)  # Nested list of RaceTiming instances
+    race_data = RaceDataSerializer(many=True, source='racedata_set')  # Specify source for RaceData relation
+    race_timings = RaceTimingSerializer(many=True)  # No need to specify source here
 
     class Meta:
         model = Race
         fields = ['race_name', 'race_date', 'location', 'race_data', 'race_timings']
+
+
 
     def create(self, validated_data):
         # Extract nested race_data and race_timings from validated data
