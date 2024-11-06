@@ -49,6 +49,6 @@ urlpatterns = [
     path('races/<str:race_pk>/timings/<str:pk>/', RaceTimingDetail.as_view(), name='racetiming-detail'),
     path('races/<str:race_pk>/timings/update/<str:pk>/', RaceTimingUpdate.as_view(), name='racetiming-update'),
     path('races/<str:race_pk>/timings/delete/<str:pk>/', RaceTimingDelete.as_view(), name='racetiming-delete'),
-        path('races/<str:race_pk>/data/upload/', RaceDataUpload.as_view(), name='racedata-upload'),
+    path('races/<str:race_pk>/data/upload/', RaceDataUpload.as_view(), name='racedata-upload'),
 
 ]
