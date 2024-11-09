@@ -19,8 +19,6 @@ class RaceSerializer(serializers.ModelSerializer):
         model = Race
         fields = ['race_name', 'race_date', 'location', 'race_data', 'race_timings']
 
-
-
     def create(self, validated_data):
         # Extract nested race_data and race_timings from validated data
         race_data_list = validated_data.pop('race_data')
