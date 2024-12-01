@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Race(models.Model):
     race_name = models.CharField(max_length=100)
     race_date = models.DateTimeField()
@@ -7,6 +8,7 @@ class Race(models.Model):
 
     def __str__(self):
         return self.race_name
+
 
 class RaceData(models.Model):
     race = models.ForeignKey(Race,
@@ -32,12 +34,23 @@ class RaceData(models.Model):
             ),
         ]
 
+
 class RaceTiming(models.Model):
-    runner = models.ForeignKey(
-        RaceData, on_delete=models.CASCADE,
-        related_name='race_timings')  # Direct link to Race
+    runner = models.ForeignKey(RaceData,
+                               on_delete=models.CASCADE,
+                               related_name='race_timings',
+                               null=True,
+                               blank=True)
     timestamp = models.DateTimeField(null=True, blank=True)
     checkpoint_number = models.PositiveIntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["runner", "checkpoint_number"],
+                name="unique_race_timing",
+            ),
+        ]
 
     def __str__(self):
         return (f"Race: {self.runner.race.race_name}, Checkpoint: "
