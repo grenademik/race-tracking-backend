@@ -5,6 +5,10 @@ from api.models import Race, RaceData, RaceTiming
 from api.serializers import (RaceDataSerializer, RaceSerializer,
                              RaceTimingSerializer)
 
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 class RaceFilterSet(FilterSet):
 
@@ -40,7 +44,14 @@ class RaceTimingFilterSet(FilterSet):
         fields = "__all__"
 
 
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class RaceTimingAPI(ModelViewSet):
     queryset = RaceTiming.objects.all().order_by('-id')
     serializer_class = RaceTimingSerializer
     filterset_class = RaceTimingFilterSet
+    pagination_class = CustomPageNumberPagination
